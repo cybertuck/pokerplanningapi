@@ -41,8 +41,6 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    //@Transactional
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     public void userJoinRoom(Room room, User user) {
         Set<User> participants = room.getParticipants();
         log.info("participants before add-"+participants.toString());
