@@ -12,7 +12,6 @@ import java.util.List;
 
 @Slf4j
 @Service
-@Transactional
 public class UserServiceImpl implements UserService
 {
     @Autowired
@@ -21,7 +20,7 @@ public class UserServiceImpl implements UserService
     @Override
     public User getById(Long id) {
         log.info("IN UserServiceImpl getById {}", id);
-        User user = userRepository.getReferenceById(id);
+        User user = userRepository.findById(id).get();
         return user;
     }
 
