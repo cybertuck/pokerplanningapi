@@ -14,4 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //Optional<Room> findByRoom(Room room);
 
     List<User>findByRoom(Room room);
+
+    Optional<User>findByNameEqualsIgnoreCase(String name);
+    Optional<User>findByUidEqualsIgnoreCase(String uid);
 }

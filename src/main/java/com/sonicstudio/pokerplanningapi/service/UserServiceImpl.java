@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService
 
     @Override
     public List<User> getAllInRoom(Room room) {
-        log.info("IN UserServiceImpl getAll");
+        log.info("IN UserServiceImpl getAllInRoom");
         List<User> users = userRepository.findByRoom(room);
         return users;
     }

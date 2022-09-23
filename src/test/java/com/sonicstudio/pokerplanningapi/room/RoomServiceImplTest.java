@@ -3,7 +3,6 @@ package com.sonicstudio.pokerplanningapi.room;
 import com.sonicstudio.pokerplanningapi.model.Room;
 import com.sonicstudio.pokerplanningapi.repository.RoomRepository;
 import com.sonicstudio.pokerplanningapi.service.RoomService;
-import com.sonicstudio.pokerplanningapi.service.RoomServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

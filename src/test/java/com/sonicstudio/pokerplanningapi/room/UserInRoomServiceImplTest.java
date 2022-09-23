@@ -2,7 +2,6 @@ package com.sonicstudio.pokerplanningapi.room;
 
 import com.sonicstudio.pokerplanningapi.model.Room;
 import com.sonicstudio.pokerplanningapi.model.User;
-import com.sonicstudio.pokerplanningapi.repository.RoomRepository;
 import com.sonicstudio.pokerplanningapi.repository.UserRepository;
 import com.sonicstudio.pokerplanningapi.service.RoomService;
 import com.sonicstudio.pokerplanningapi.service.UserService;
@@ -18,9 +17,6 @@ public class UserInRoomServiceImplTest {
 
     @Autowired
     private RoomService roomService;
-
-    @Autowired
-    private RoomRepository roomRepository;
 
     @Autowired
     private UserService userService;
@@ -45,11 +41,22 @@ public class UserInRoomServiceImplTest {
         user.setUid("michael534598649");
         userService.create(user);
 
+        User user2 = new User();
+        user2.setName("peter");
+        user2.setUid("peter534598923");
+        userService.create(user2);
+
         //When
         roomService.userJoinRoom(room, user);
+        roomService.userJoinRoom(room, user2);
 
         //Then
-        assertTrue(roomRepository.findByParticipantsIsNotNull().isPresent());
+        assertEquals(2, userRepository.findByRoom(room).size());
+
+        //When
+        roomService.userLeaveRoom(room, user);
+
+        //Then
         assertEquals(1, userRepository.findByRoom(room).size());
     }
 }

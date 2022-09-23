@@ -1,6 +1,5 @@
 package com.sonicstudio.pokerplanningapi.model;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -8,9 +7,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -26,7 +24,7 @@ public class Room implements Serializable {
     public Room(String room_number, Integer lifetime){
         this.room_number = room_number;
         this.lifetime = lifetime;
-        this.created_date = LocalDate.now();
+        this.created_date = LocalDateTime.now();
         this.participants = new HashSet<>();
     }
 
@@ -38,15 +36,27 @@ public class Room implements Serializable {
     @Column(name = "room_number")
     private String room_number;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<User> participants = new HashSet<>();
 
     @Column(name = "scrummaster")
     private Long scrummaster;
 
     @Column(name = "created_date")
-    private LocalDate created_date;
+    private LocalDateTime created_date;
 
     @Column(name = "lifetime")
     private Integer lifetime;
+
+    public Room addUser(User user){
+        participants.add(user);
+        user.setRoom(this);
+        return this;
+    }
+
+    public Room deleteUser(User user){
+        participants.remove(user);
+        user.setRoom(null);
+        return this;
+    }
 }

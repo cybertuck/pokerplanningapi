@@ -1,11 +1,13 @@
 package com.sonicstudio.pokerplanningapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,10 +28,11 @@ public class User implements Serializable {
     private String name;
 
     @Column(name = "created")
-    private String created;
+    private LocalDateTime created;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id")
+    @JsonIgnoreProperties(value = "participants", allowSetters = true)
     private Room room;
 
     @Column(name = "settings")

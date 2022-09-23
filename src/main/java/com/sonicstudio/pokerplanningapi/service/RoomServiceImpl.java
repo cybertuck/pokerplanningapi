@@ -20,8 +20,6 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     RoomRepository roomRepository;
 
-    UserRepository userRepository;
-
     @Override
     public Room getById(Long id) {
         log.info("IN RoomServiceImpl getById {}", id);
@@ -42,24 +40,16 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public void userJoinRoom(Room room, User user) {
-        Set<User> participants = room.getParticipants();
-        log.info("participants before add-"+participants.toString());
-        participants.add(user);
-        log.info("participants after add-"+participants.toString());
-        room.setParticipants(participants);
-        roomRepository.save(room);
-        user.setRoom(room);
         log.info("IN RoomServiceImpl userJoinRoom");
+        room.addUser(user);
+        roomRepository.save(room);
     }
 
     @Override
     public void userLeaveRoom(Room room, User user) {
-        Set<User> participants = room.getParticipants();
-        participants.remove(user);
-        room.setParticipants(participants);
-        roomRepository.save(room);
-        user.setRoom(null);
         log.info("IN RoomServiceImpl userLeaveRoom");
+        room.deleteUser(user);
+        roomRepository.save(room);
     }
 
     @Override
